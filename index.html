@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiago Oliveira - Fisioterapeuta</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .fixed-header.visible {
+            transform: translateY(0);
+        }
+
+        .fixed-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .fixed-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fixed-logo-icon {
+            width: 30px;
+            height: 30px;
+            position: relative;
+        }
+
+        .fixed-dots {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .fixed-dot {
+            width: 5px;
+            height: 5px;
+            background: #27ae60;
+            border-radius: 50%;
+        }
+
+        .fixed-logo-letter {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            margin-left: 10px;
+        }
+
+        .fixed-header h2 {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .fixed-header .subtitle-small {
+            font-size: 0.9em;
+            color: #27ae60;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.03) 10px,
+                rgba(255,255,255,0.03) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            position: relative;
+        }
+
+        .dots {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #27ae60;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        .dot:nth-child(4) { animation-delay: 0.6s; }
+        .dot:nth-child(5) { animation-delay: 0.8s; }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .logo-letter {
+            font-size: 48px;
+            font-weight: bold;
+            color: white;
+            margin-left: 15px;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .subtitle {
+            font-size: 1.5em;
+            color: #27ae60;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #27ae60;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .cta-button:hover {
+            background: #229954;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: #27ae60;
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .qualifications {
+            background: #f8f9fa;
+        }
+
+        .qual-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .qual-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #27ae60;
+        }
+
+        .qual-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .qual-card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .qual-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .services {
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            text-align: center;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .service-card:hover {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .service-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .contact {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+        }
+
+        .contact-item {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: scale(1.1);
+        }
+
+        .contact-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            color: #27ae60;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #27ae60;
+        }
+
+        .crefito {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            font-size: 1.2em;
+            letter-spacing: 2px;
+        }
+
+        footer {
+            background: #1a252f;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 60px 20px;
+            }
+
+            .fixed-header h2 {
+                font-size: 1.2em;
+            }
+
+            .fixed-header .subtitle-small {
+                font-size: 0.8em;
+            }
+
+            .fixed-logo-letter {
+                font-size: 20px;
+            }
+
+            .fixed-logo-icon {
+                width: 25px;
+                height: 25px;
+            }
+
+            .fixed-dot {
+                width: 4px;
+                height: 4px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .subtitle {
+                font-size: 1.2em;
+            }
+
+            .section-title {
+                font-size: 1.8em;
+            }
+
+            .logo-letter {
+                font-size: 36px;
+            }
+
+            .logo-icon {
+                width: 45px;
+                height: 45px;
+            }
+
+            .dot {
+                width: 6px;
+                height: 6px;
+            }
+
+            .cta-button {
+                padding: 12px 30px;
+                font-size: 1em;
+            }
+
+            .container {
+                padding: 50px 15px;
+            }
+
+            .qual-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .service-card {
+                padding: 30px 20px;
+            }
+
+            .service-icon {
+                font-size: 2.5em;
+            }
+
+            .contact-info {
+                gap: 30px;
+                flex-direction: column;
+            }
+
+            .contact-icon {
+                font-size: 2.5em;
+            }
+
+            .contact-item a {
+                font-size: 1.1em;
+            }
+
+            .crefito {
+                font-size: 1em;
+                padding: 15px;
+            }
+
+            footer {
+                padding: 20px 15px;
+                font-size: 0.9em;
+            }
+
+            .qual-card {
+                padding: 25px 20px;
+            }
+
+            .qual-card h3 {
+                font-size: 1.2em;
+            }
+
+            .service-card h3 {
+                font-size: 1.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .fixed-header h2 {
+                font-size: 1em;
+            }
+
+            .fixed-header .subtitle-small {
+                font-size: 0.7em;
+            }
+
+            .fixed-logo-letter {
+                font-size: 18px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+
+            .logo-letter {
+                font-size: 30px;
+            }
+
+            .cta-button {
+                padding: 10px 25px;
+                font-size: 0.95em;
+            }
+
+            .service-icon {
+                font-size: 2em;
+            }
+
+            .contact-icon {
+                font-size: 2em;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            font-size: 2em;
+            color: white;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header fixo ao rolar -->
+    <div class="fixed-header" id="fixedHeader">
+        <div class="fixed-header-content">
+            <div class="fixed-logo">
+                <div class="fixed-logo-icon">
+                    <div class="fixed-dots">
+                        <span class="fixed-dot"></span>
+                        <span class="fixed-dot"></span>
+                        <span class="fixed-dot"></span>
+                        <span class="fixed-dot"></span>
+                        <span class="fixed-dot"></span>
+                    </div>
+                    <span class="fixed-logo-letter">P</span>
+                </div>
+            </div>
+            <div>
+                <h2>Thiago Oliveira</h2>
+                <p class="subtitle-small">Fisioterapeuta</p>
+            </div>
+        </div>
+    </div>
+
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <div class="dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <span class="logo-letter">P</span>
+                </div>
+            </div>
+            <h1>Thiago Oliveira</h1>
+            <p class="subtitle">Fisioterapeuta</p>
+            <a href="#contato" class="cta-button">Agende sua Consulta</a>
+            <div class="scroll-indicator"></div>
+        </div>
+    </header>
+
+    <section class="qualifications">
+        <div class="container">
+            <h2 class="section-title">Qualificações</h2>
+            <div class="qual-grid">
+                <div class="qual-card">
+                    <h3>🎓 Especialista</h3>
+                    <p>Especialista em Fisioterapia Musculoesquelética</p>
+                </div>
+                <div class="qual-card">
+                    <h3>📚 Mestre</h3>
+                    <p>Mestre em Ciências Fisiológicas</p>
+                </div>
+                <div class="qual-card">
+                    <h3>🔬 Doutor</h3>
+                    <p>Doutor em Ciências Fisiológicas</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">Serviços</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🦴</div>
+                    <h3>Fisioterapia Musculoesquelética</h3>
+                    <p>Tratamento especializado para dores musculares e articulares</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚡</div>
+                    <h3>Reabilitação</h3>
+                    <p>Recuperação funcional pós-lesões e cirurgias</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🧘</div>
+                    <h3>Prevenção</h3>
+                    <p>Orientações e exercícios para prevenir lesões</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💪</div>
+                    <h3>Fortalecimento</h3>
+                    <p>Programas personalizados de fortalecimento muscular</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="contact">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Contato</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <p><strong>WhatsApp</strong></p>
+                    <a href="https://wa.me/5527992758630" target="_blank">(27) 99275-8630</a>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📷</div>
+                    <p><strong>Instagram</strong></p>
+                    <a href="https://instagram.com/thiago13.oliveira" target="_blank">@thiago13.oliveira</a>
+                </div>
+            </div>
+            <div class="crefito">
+                <strong>CREFITO 15 222157-F</strong>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Thiago Oliveira - Fisioterapeuta. Todos os direitos reservados.</p>
+        <p>Atendimento particular na Grande Vitória, ES</p>
+    </footer>
+
+    <script>
+        // Header fixo ao rolar
+        const fixedHeader = document.getElementById('fixedHeader');
+        const headerHeight = document.querySelector('.header').offsetHeight;
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > headerHeight - 100) {
+                fixedHeader.classList.add('visible');
+            } else {
+                fixedHeader.classList.remove('visible');
+            }
+        });
+
+        // Smooth scroll para links internos
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animação de entrada dos cards ao scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '0';
+                    entry.target.style.transform = 'translateY(30px)';
+                    setTimeout(() => {
+                        entry.target.style.transition = 'all 0.6s ease';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, 100);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.qual-card, .service-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Efeito parallax no header
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('.header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
